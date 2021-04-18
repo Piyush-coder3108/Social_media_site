@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+.navbar {
+    background-color: #2851A3 !important;
+    color: #fff !important;
+}
+
+.search-frnd {
+    width: 20rem !important;
+    height: 2rem;
+}
+
+.submit-search {
+    height: 2rem;
+}
+
+#navbarNav {
+    width: 25em;
+}
+
+.user-info {
+    color: #fff !important;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    margin: 0 10px;
+}
+
+.user-info:hover {
+    color: #000 !important;
+}
+
+.card {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.comment-it {
+    width: 95%;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    border-radius: 1rem;
+    border: 1px solid black;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+#add-status {
+    width: 1.5rem;
+    position: absolute;
+    /* margin-right: 10rem;
+    margin-bottom: 3rem; */
+}
+
+
+/* */
+
+.brand {
+    color: #fff !important;
+}
+
+.text-right {
+    color: #fff;
+}
+
+.share-comment {
+    width: 1.6rem;
+    position: absolute;
+    margin-top: 1rem;
+    margin-left: 23rem;
+}
+
+.like {
+    width: 3rem;
+}
+
+.like:hover {
+    background-color: #2851a3;
+}
+
+.friend-info {
+    background-color: #BEC3C9;
+}
+
+.save {
+    width: 1.5rem;
+}
+
+.save:hover {
+    width: 2rem;
+}
+
+.post-img {
+    width: 25rem
+}
+
+.profile-info {
+    color: #fff !important;
+}
+
+.profile-info:hover {
+    color: #2851a3!important;
+}
+
+.chat-sec {
+    color: #fff;
+}

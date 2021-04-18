@@ -1,0 +1,77 @@
+<link rel="stylesheet" href="/css/indexpage.css">
+<div class="wrapper">
+    <div class="title-text">
+        <div class="title login">
+            Login Form</div>
+        <div class="title signup">
+            Signup Form</div>
+    </div>
+    <div class="form-container">
+        <div class="slide-controls">
+            <input type="radio" name="slide" id="login" checked>
+            <input type="radio" name="slide" id="signup">
+            <label for="login" class="slide login">Login</label>
+            <label for="signup" class="slide signup">Signup</label>
+            <div class="slider-tab">
+            </div>
+        </div>
+        <div class="form-inner">
+            <form action="/user/login" class="login" method="POST">
+                <div class="field">
+                    <input type="text" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="pass-link">
+                    <a href="#">Forgot password?</a></div>
+                <div class="field btn">
+                    <div class="btn-layer">
+                    </div>
+                    <input type="submit" value="Login">
+                </div>
+                <div class="signup-link">
+                    Not a member? <a href="">Signup now</a></div>
+            </form>
+            <form action="/user/register" class="signup" method="POST">
+                <div class="field">
+                    <input type="text" name="firstname" placeholder="First Name" required>
+                </div>
+                <div class="field">
+                    <input type="text" name="lastname" placeholder="Last Name" required>
+                </div>
+                <div class="field">
+                    <input type="text" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="field">
+                    <input type="date" id="dob" name="dob"  min="1990-01-01" max="2010-12-31">
+                </div>
+                <div class="field">
+                    <div class ="gender" style="float: left;">
+                        <p>GENDER:</p>
+                        <select name="gender" style="margin-left: 33px;">
+                            <option value = "male" >Male</option>
+                            <option value = "female" >Female</option>
+                            <option value = "other" >Other</option>
+                            </select>
+                   
+                    </div>
+                </div>
+                <div class="field btn">
+                    <div class="btn-layer">
+                    </div>
+                    <input type="submit" value="Signup">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/js/index.js">
+</script>
+
+
+
+

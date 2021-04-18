@@ -1,0 +1,34 @@
+<div class="d-flex flex-column justify-content-center">
+
+    <% for(let i=0; i<posts.length ; i++) { %> 
+      <div class=" card my-2 ml-4 " style="position: relative; width: 28rem;margin: auto; ">
+        <div class="card-body ">
+          <img src="/images/profile.jpg " class="post-img " alt=" ">
+          <h5 class="card-title "><%= posts[i].user.firstname %> <%= posts[i].user.lastname %></h5>
+          <p class="card-text "><%= posts[i].content %></p>
+          <div class="like-cmnt d-flex justify-content-between ">
+            <section class="sec-1 ">
+              <img src="/images/svg/thums-up.svg " class="btn like " alt=" ">
+    
+    
+              <img src="/images/svg/comment.svg " id="comment-<%= i %>" class="btn like" alt=" ">
+    
+    
+              <img src="/images/svg/share.svg " class="btn like ">
+            </section>
+            <section class="sec-2 ">
+              <img src="/images/svg/save.svg " alt=" " class="save ">
+            </section>
+          </div>
+          <div class="" id='comment-show-<%= i %>'>
+            <div>You look nice man</div>
+            <div>You look nice man</div>
+            <div>You look nice man</div>
+    
+            <input type="text " class="comment-it border-dark ">
+            <img src="/images/svg/cursor.svg " class="share-comment " alt=" ">
+          </div>
+        </div>
+      </div>
+    <% } %>
+   </div>
