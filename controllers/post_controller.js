@@ -6,23 +6,15 @@ const Comment= require('../models/comment');
 // For creating a post
 
 module.exports.create_post= (req,res)=>{
-    console.log(req.file);
-    console.log(req.body);
-    res.send("done");
-    // Post.uploadedImage(req,res, (err)=>{
-    //     if(err) { console.log(err)};
-    //     console.log(req.file);
-    //     console.log(req.body.content);
-    //     res.send("done");
-    // })
-    // Post.create({
-    //     content: req.body.content,
-    //     user: req.user._id
-    // },(err,post)=>{
-    //     if(err) { console.log(err); return;}
-    //     req.flash('success','Successfully created post !!!!');
-    //     return res.redirect('back');
-    // });
+        console.log(req.body);  
+       Post.create({
+        content: req.body.content,
+        user: req.user._id
+    },(err,post)=>{
+        if(err) { console.log(err); return;}
+        req.flash('success','Successfully created post !!!!');
+        return res.redirect('back');
+    });
 };
 
 
@@ -81,5 +73,28 @@ module.exports.delete_comment=(req,res)=>{
         else{
             res.redirect('back');
         }
+    })
+};
+
+
+
+// For liking a post
+module.exports.like_post=(req,res)=>{
+    Post.findById(req.body.postid,(err,result)=>{
+        if(err) { console.log(err)}
+      for(var i=0;i<result.likes.length;i++){
+          if(result.likes[i]==req.user.id){
+              console.log(req.user);
+            Post.findByIdAndUpdate(req.body.postid,{$pull : { likes: req.user.id}},(err,done)=>{
+                
+            });
+            result.save();
+              return res.redirect('back');
+          }
+      }
+      result.likes.push(`${req.user.id}`);
+      result.save();
+      return res.redirect('back');
+        
     })
 }

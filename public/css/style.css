@@ -25,7 +25,7 @@
 .user-info {
     color: #fff !important;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 500;
+    font-weight: 700;
     margin: 0 10px;
 }
 
@@ -43,7 +43,10 @@
     margin-top: 1rem;
     border-radius: 1rem;
     border: 1px solid black;
+    padding: 8px 11px;
+    outline: none;
 }
+
 
 a {
     text-decoration: none !important;
@@ -83,7 +86,7 @@ a {
 }
 
 .friend-info {
-    background-color: #BEC3C9;
+    /* background-color: #BEC3C9; */
 }
 
 .save {
@@ -107,5 +110,15 @@ a {
 }
 
 .chat-sec {
-    color: #fff;
+    color:black;
+}
+
+
+.edit_profile{
+    height: 40px;
+    padding: 5px 5px;
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 16px 29px;
+    outline: none;
 }

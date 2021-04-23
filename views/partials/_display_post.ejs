@@ -1,32 +1,43 @@
 <div class="d-flex flex-column justify-content-center">
 
     <% for(let i=0; i<posts.length ; i++) { %> 
-      <div class=" card my-2 ml-4 " style="position: relative; width: 28rem;margin: auto; ">
+      <div class=" card my-2 ml-4 " style="position: relative; width: 35rem;margin: auto; ">
         <div class="card-body ">
-          <img src="/images/profile.jpg " class="post-img " alt=" ">
-          <h5 class="card-title "><%= posts[i].user.firstname %> <%= posts[i].user.lastname %></h5>
+         
+          <h5 class="card-title "><img src="/images/profile.png " style="width:2rem; height:2rem ; " class="rounded-circle " alt=" ">  <%= posts[i].user.firstname %> <%= posts[i].user.lastname %></h5>
           <p class="card-text "><%= posts[i].content %></p>
           <div class="like-cmnt d-flex justify-content-between ">
             <section class="sec-1 ">
-              <img src="/images/svg/thums-up.svg " class="btn like " alt=" ">
-    
+              <form action="/post/like" method="POST">
+                <input type="hidden" name="postid" value="<%= posts[i].id %>">
+           
+            <span><%= posts[i].likes.length %></span>
+            <% var liked=false; %>
+            <% for(var num=0;num<posts[i].likes.length;num++){  if(posts[i].likes[num]==locals.user.id){liked=true; }} %>
+              <% if(!liked) { %>
+              <button type="submit" style="border: none; outline: none; background: transparent;"><img src="/images/svg/thums-up.svg " type="submit" class="btn like " alt=" "></button>
+              <% } else {%>
+                <button type="submit" style="border: none; outline: none; background: transparent;"><img src="/images/svg/thums-up.svg " type="submit" class="btn like " alt=" " style=" background-color: #2851a3;"></button>
+              <% } %>
     
               <img src="/images/svg/comment.svg " id="comment-<%= i %>" class="btn like" alt=" ">
-    
-    
-              <img src="/images/svg/share.svg " class="btn like ">
+  
+              <a href="/post/delete/<%= posts[i].id %>"> <i class="fas fa-trash btn like"></i></a>
+
+            </form>
             </section>
-            <section class="sec-2 ">
-              <img src="/images/svg/save.svg " alt=" " class="save ">
-            </section>
+      
           </div>
           <div class="" id='comment-show-<%= i %>'>
-            <div>You look nice man</div>
-            <div>You look nice man</div>
-            <div>You look nice man</div>
-    
-            <input type="text " class="comment-it border-dark ">
-            <img src="/images/svg/cursor.svg " class="share-comment " alt=" ">
+            <br>
+            
+             <% for(var com=0; com<posts[i].comments.length; com++){ %>
+              <div style="padding: 5px 5px; word-wrap: break-word;"><img src="/images/profile.png " style="width:2rem; height:2rem ; " class="rounded-circle " alt=" "> <%= posts[i].comments[com].user.firstname %> <%= posts[i].comments[com].user.lastname %> : <%= posts[i].comments[com].content %></div>
+             <% } %>
+              <form action="/post/create_comment" method="POST">
+              <input type="hidden" name="post" value="<%= posts[i].id %>">
+            <input type="text"  name="content" placeholder="Write your comment here....." class="comment-it border-dark ">
+             </form>
           </div>
         </div>
       </div>

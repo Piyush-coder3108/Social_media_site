@@ -1,0 +1,69 @@
+<!-- Button trigger modal -->
+<div style="float: right;">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Edit profile
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Profile </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/user/update_profile" method="POST">
+                    <label for="firstname">First Name: </label>
+                    <input type="text" id="firstname" class="edit_profile" name="firstname"
+                        value="<%= locals.user.firstname %>"><br>
+
+                    <label for="lastname">Last Name: </label>
+                    <input type="text" id="lastname" class="edit_profile" name="lastname"
+                        value="<%= locals.user.lastname %>"><br>
+
+                    <label for="dob">Born on: </label>
+                    <input type="date" id="dob" class="edit_profile" name="dob"  min="1990-01-01" max="2020-11-31" value="<%= locals.user.Birthday %>"><br>
+
+                    <label for="gender">Gender: </label>
+                    <select name="gender" id="gender" class="edit_profile">
+                        <option value = "Male" >Male</option>
+                        <option value = "Female" >Female</option>
+                        <option value = "Other" >Other</option>
+                        </select><br>
+
+                    <label for="bio">Bio: </label>
+                    <input type="text" id="bio" class="edit_profile" name="bio"
+                        value="<%= locals.user.Bio %>"><br>
+
+                    <label for="work">Work: </label>
+                    <input type="text" id="work" class="edit_profile" name="work"
+                        value="<%= locals.user.Work %>"><br>
+
+                    <label for="study">Studies in: </label>
+                    <input type="text" id="study" class="edit_profile" name="study"
+                        value="<%= locals.user.Studies %>"><br>
+
+                    <label for="live">Lives in: </label>
+                     <input type="text" id="live" class="edit_profile" name="live"
+                      value="<%= locals.user.Lives %>"><br>
+
+                    <label for="status">Status: </label>
+                    <select name="status" id="status" class="edit_profile" >
+                        <option value = "Single" >Single</option>
+                        <option value = "Married" >Married</option>
+                        <option value = "Searching" >Searching</option>
+                        <option value = "Dating" >Dating</option>
+                        </select><br>
+                    
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary"> Update my profile</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

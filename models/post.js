@@ -1,7 +1,7 @@
-const multer= require('multer');
-const mongoose= require('mongoose');
-const path=require('path');
-const post_images_path=path.join('/uploads/post');
+const multer = require('multer');
+const mongoose = require('mongoose');
+const path = require('path');
+const post_images_path = path.join('/uploads/post');
 
 const postSchema = new mongoose.Schema({
 
@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema({
         required: true
     },
     image: {
-         type: String
+        type: String
     },
 
     user: {
@@ -22,26 +22,29 @@ const postSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Comment'
         }
+    ],
+    likes: [
+        {
+            type: String
+        }
     ]
-},{
+}, {
     timestamps: true
 });
 
-// var storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//       cb(null, path.join(__dirname, '..',post_images_path));
-//     },
-//     filename: function (req, file, cb) {
-//       cb(null, file.fieldname + '-' + Date.now())
-//     }
-//   });
+var Storage = multer.diskStorage({
+    destination: path.join(__dirname, '..', post_images_path),
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    }
+});
 
 
 // // static 
-// postSchema.statics.uploadedImage= multer({storage: storage}).single('image');
-// postSchema.statics.image_path= post_images_path;
+postSchema.statics.uploadedImage = multer({ storage: Storage });
+postSchema.statics.image_path = post_images_path;
 
 
-const post= mongoose.model('post',postSchema);
+const post = mongoose.model('post', postSchema);
 
-module.exports=post;
+module.exports = post;

@@ -1,24 +1,29 @@
 
 
     <% if (locals.user) {  %>
-        <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-            <a class="navbar-brand brand" href="#">ChatApp</a>
+        <nav class="navbar navbar-expand-lg navbar-light " style="z-index: 0;">
+            <a class="navbar-brand brand" style="margin: 3px 50px; font-weight: bold; font-size: 31px; "href="/">Advencho</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
               aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse d-flex justify-content-center " id="navbarNav">
         
-              <form class="form-inline mr-5 ">
-                <input class="form-control mr-sm-2 search-frnd" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline my-2 my-sm-0 submit-search" type="submit">Search</button>
-              </form>
+               <form action="/user/find_profile" method="POST">
+                <input class="form-control mr-sm-2 search-frnd" name="username" id="searchname" type="search" placeholder="Search" aria-label="Search">
+                </form>
+              
             </div>
             <div class="mr-4 d-flex justify-content-between ">
               <div class="text-right mx-3">
-                <img src="/images/profile.jpg " style="width:3rem; height:3rem ; " class="rounded-circle " alt=" ">
-                <a href="#" class="user-info"><%= locals.user.firstname %> <%= locals.user.lastname %></a>
+                <form action="/user/find_profile" method="POST">
+                  <input type="hidden" name="username" value="<%= locals.user.email %>">
+                  <button class="user-info" type="submit" style="border: none; outline: none; background: transparent;">
+                <img src="/images/profile.png " style="width:3rem; height:3rem ; " class="rounded-circle " alt=" ">
+                <%= locals.user.firstname %> <%= locals.user.lastname %></button>
+               
                 <a href="/user/logout" class="user-info">logout</a>
+              </form>
               </div>
               <div class="text-right ">
                 

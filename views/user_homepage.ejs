@@ -1,103 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+<style>
+  .message{
+    background-color: white;
+    width: 50%;
+    padding: 4px;
+    font-size: 14px;
+    margin: 5px 0px;
+    overflow-wrap: break-word;
+    /* border: 2px solid black; */
+    border-radius: -6px;
+}
 
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="/css/style.css">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-  
-</head>
+.left{
+float: left;
+clear: both;
+}
 
-<body class="bg-light"> 
+.right{
+float: right;
+clear: both;
 
+}
+
+</style>
+
+<body class="bg-light">
+  <input type="hidden" id="my-username" value="<%= locals.user.email %>">
   <div class="col-12">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-3 friend-info">
+        <div class="col-2 friend-info">
           <div class="info">
             <div class="mt-5 text-center">
-              <a href="#" class="profile-info"><%= locals.user.firstname %> <%= locals.user.lastname %></a>
+              <form action="/user/find_profile" method="POST">
+                <input type="hidden" name="username" value="<%= locals.user.email %>">
+               <button type="submit" style="border: none; outline: none; background: transparent;"><%= locals.user.firstname %> <%= locals.user.lastname %></button>
+              </form>
             </div>
             <div class="mt-5 text-center">
-              <a href="#" class="profile-info">Friends</a>
+              <a href="#" class="" style="color: black;">Friends <%= locals.user.Friends.length %></a>
             </div>
-            <div class="note mt-5 text-center">
-              <div class="dropdown">
-                <button class="btn btn-one dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-                  aria-haspopup="true" aria-expanded="false" class="profile-info">
-                  Notification
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">
-                    first-notification
-                  </a>
-                  <a class="dropdown-item" href="#">2nd notification</a>
-                  <a class="dropdown-item" href="#">Someother</a>
-                </div>
-              </div>
-            </div>
+            <%- include('partials/_notifications') %>
+              <br>
+              <br>
+
           </div>
         </div>
 
 
 
-        <div class="col-6 "  >
+        <div class="col-7 ">
           <br>
           <br>
+
           <%- include('partials/_create_post') %>
-          <hr>
-           <%- include('partials/_display_post') %>
-         </div>
+            <hr>
+            <%- include('partials/_display_post') %>
+        </div>
 
 
 
-        <div class="col-3 bg-dark ">
 
-          <div class="row bg-light my-2 bg-dark chat-sec ">
+        <div class="col-3 " style="text-align: center; margin-top: 5rem;" >
+          <!-- Button trigger modal -->
+        <% for(var abc=0; abc<request.Friends.length;abc++) { %>
+          <button type="button" class="btn " style="padding: 9px 13px; width: 18rem; font-size: 16px; background: white;color: black;outline: none;border: none;border-radius: 17px; margin: 0.5rem;" data-bs-toggle="modal" data-bs-target="#friend-<%= abc %>">
+            <%= request.Friends[abc].firstname %> <%= request.Friends[abc].lastname %>
+          </button>
 
-            <div class="col-4 my-2 ">
-              <div class="info-friend d-flex ">
-                <div class="img ">
-                  <img src="/images/profile.jpg " style="width:3rem; height:3rem ; " class="rounded-circle " alt=" ">
+          <!-- Modal -->
+          <div class="modal fade" id="friend-<%= abc %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" >
+              <div class="modal-content" style="background-color: #f8f9fa;">
+                <div class="modal-header" style="background-color: #2851a3 ;color: white;">
+                  <h5 class="modal-title" id="exampleModalLabel"><%= request.Friends[abc].firstname %> <%= request.Friends[abc].lastname %></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="name-info ml-3 ">
-                  <span>Rohit</span>
-                  <div class="msg d-flex ">
-                    <p class="text-nowrap ">Hello Rohit </p>
-                  </div>
-                </div>
+                <div class="modal-body">
+                <div class="container-<%= request.Friends[abc].email %>">
+                  <div class="message right">Piyush: How are you?</div>
+                  <div class="message left">Rakshit: Bhai I am fine!!fagehet frhaern rehet thbtrbtrh rtny gtbrt trjhn rttb trrht</div>
               </div>
-              <hr style="width:15rem ">
-              <div class="info-friend d-flex ">
-                <div class="img ">
-                  <img src="/images/profile.jpg " style="width:3rem; height:3rem ; " class="rounded-circle " alt=" ">
-                </div>
-                <div class="name-info ml-3 ">
-                  <span>Rohit</span>
-                  <div class="msg d-flex ">
-                    <p class="text-nowrap ">Hello Rohit </p>
-                  </div>
-                </div>
+                <div style="display: block;">
+                  <form action="#" id="send-container">
+                    <input type="hidden" id="to" value="<% request.Friends[abc].email %>">
+                <input type="text" id="send-message" style=" width: 70%;  margin-top: 30px; padding: 4px 6px; border-radius: 10px;outline: none;" placeholder="Write your message here....." required>
+                </form>  
               </div>
-              <hr style="width:15rem ">
-
-              <div class="info-friend d-flex ">
-                <div class="img ">
-                  <img src="/images/profile.jpg " style="width:3rem; height:3rem ; " class="rounded-circle " alt=" ">
                 </div>
-                <div class="name-info ml-3 ">
-                  <span>Rohit</span>
-                  <div class="msg d-flex ">
-                    <p class="text-nowrap ">Hello Rohit </p>
-                  </div>
-                </div>
+    
               </div>
-
             </div>
           </div>
+          <% } %>
+
         </div>
 
       </div>
@@ -105,13 +104,8 @@
   </div>
 
 
-
-
-
-
-
-
-
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/script_socket.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
     crossorigin="anonymous "></script>
@@ -124,13 +118,61 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
     crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <script>
+
+    $('#searchname').autocomplete({
+      source: function (req, res) {
+        $.ajax({
+          url: "/autocomplete",
+          dataType: "jsonp",
+          type: "GET",
+          data: req,
+          success: (data) => {
+            res(data);
+          },
+          error: (err) => {
+
+          }
+        });
+      },
+      minLength: 1,
+      select: function (event, ui) {
+        if (ui.item) {
+          $('#searchname').text(ui.item.label);
+        }
+      }
+    })
+
+
+  </script>
   <script>
     $(document).ready(function () {
-      
-        $(`#comment-0`).click(function () {
+      var num = <%= locals.user.Pending_request.length %>
+      if (num > 0) {
+        new Noty({
+          theme: 'relax',
+          text: `You have ${num} friend request pending`,
+          type: 'success',
+          layout: 'topRight',
+          timeout: 1500
+        }).show();
+      }
+        
+
+          <% for (var k = 0; k < posts.length; k++) { %>
+            $(`#comment-show-<%= k %>`).hide();
+        $(`#comment-<%= k %>`).click(function () {
+          console.log("hello <%= k %>");
+          $(`#comment-show-<%= k %>`).toggle();
+        });
+
+          <% } %>
+
           
-        $(`#comment-show-0`).toggle();
-      });
+
       
     });
   </script>

@@ -29,7 +29,52 @@ const userSchema= new mongoose.Schema({
         type: String,
         enum: ['Male','Female','Other'],
         required: true
-    }
+    },
+    Bio: {
+        type: String,
+        default: "Not Available"
+    },
+    Work: {
+        type: String,
+        default: "Not Available"
+    },
+    Studies: {
+        type: String,
+        default: "Not Available"
+    },
+    Lives: {
+        type: String,
+        default: "Not Available"
+    },
+    Status: {
+        type: String,
+        enum: ['Single','Married','Searching','Dating'],
+        default: 'Single'
+    },
+
+    Friends: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
+     ],
+
+     Pending_request: [
+         {
+             type: mongoose.Schema.Types.ObjectId,
+             ref: 'User'
+         }
+     ],
+
+     Status: {
+         type: String,
+         enum: ['online','offline']
+     },
+
+     Socketid: {
+         type: String
+     }
+    
 
 },{
     timestamp: true

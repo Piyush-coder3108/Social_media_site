@@ -1,0 +1,26 @@
+<div class="mt-5 text-center">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#notification">
+      Notifications  <%= locals.user.Pending_request.length %>
+    </button> 
+  </div>
+  <!-- Modal -->
+<div class="modal fade" id="notification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body" style="width: 50vw">
+<% for(var w=0;w<request.Pending_request.length;w++) { %>
+    <div>You have request from <a href="/user/profile/<%= request.Pending_request[w].id %>"><%= request.Pending_request[w].firstname %> <%= request.Pending_request[w].lastname %></a></div>
+    <button type="button" class="btn btn-primary"><a href="/user/friend/accept_request/<%= request.Pending_request[w].id %>" style="text-decoration: none; color: white;">Accept</a></button>
+    <button type="button" class="btn btn-secondary"><a href="/user/friend/decline_request/<%= request.Pending_request[w].id %>" style="text-decoration: none; color: white;">Decline</a></button>
+    <br>
+    <br>
+    <% } %>
+</div>
+
+</div>
+</div>
+</div>

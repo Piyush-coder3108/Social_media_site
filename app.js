@@ -8,9 +8,13 @@ const flash=require('connect-flash');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore=require('connect-mongo');
 const customware=require('./config/middleware')
-
+const http=require('http');
+const socketIO=require('socket.io');
 const app=express();
 
+const server= http.createServer(app);
+
+const io=socketIO(server); 
 
 const PORT= process.env.PORT || 5100;
 
@@ -61,6 +65,29 @@ app.use(flash());
 app.use(customware.setFlash);
 //express Router
 
+var connectedUser=[];
+
+io.on('connection',(socket)=>{
+    console.log(`New user connected successfully with id ${socket.id}`)
+
+    socket.on('user-joined',(username)=>{
+        console.log("hello");
+        connectedUser[username]=socket.id;
+        console.log(connectedUser[username]);
+    });
+
+    
+})
+
+
+
+
+
+
+
+
+
+
 app.use('/',require('./routes/index'));
 
 
@@ -69,7 +96,7 @@ app.use('/',require('./routes/index'));
 
 
 
-app.listen(PORT,(err)=>{
+server.listen(PORT,(err)=>{
     if(err){
         console.log(err);
     }
