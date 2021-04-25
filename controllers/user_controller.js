@@ -36,7 +36,6 @@ module.exports.profile=(req,res)=>{
 
 
 module.exports.Signup=(req,res)=>{
-    console.log(req.body);
     const {firstname,lastname,email,password,dob,gender}= req.body;
     User.findOne({email: email})
     .then((user)=>{

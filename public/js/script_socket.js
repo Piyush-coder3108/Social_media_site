@@ -28,6 +28,7 @@ $('.send_container').submit(function(e) {
     var sender_name=$(this).serializeArray()[3].value;
     $(this)[0].reset();
     append(receiver_user,'You: ',message,'right');
+    
     socket.emit('send',{
         username: receiver_user,
         sendername: sender_user,
