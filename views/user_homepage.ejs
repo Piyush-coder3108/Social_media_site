@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
 <style>
   .message{
     background-color: white;
@@ -64,38 +65,55 @@ clear: both;
 
 
         <div class="col-3 " style="text-align: center; margin-top: 5rem;" >
-          <!-- Button trigger modal -->
-        <% for(var abc=0; abc<request.Friends.length;abc++) { %>
-          <button type="button" class="btn " style="padding: 9px 13px; width: 18rem; font-size: 16px; background: white;color: black;outline: none;border: none;border-radius: 17px; margin: 0.5rem;" data-bs-toggle="modal" data-bs-target="#friend-<%= abc %>">
-            <%= request.Friends[abc].firstname %> <%= request.Friends[abc].lastname %>
-          </button>
-
-          <!-- Modal -->
-          <div class="modal fade" id="friend-<%= abc %>" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" >
-              <div class="modal-content" style="background-color: #f8f9fa;">
-                <div class="modal-header" style="background-color: #2851a3 ;color: white;">
-                  <h5 class="modal-title" id="exampleModalLabel"><%= request.Friends[abc].firstname %> <%= request.Friends[abc].lastname %></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  <!-- <form name="send_container" class="send_container">
+                    <input type="hidden" id="to" name="to" value="Hello">
+                <input type="text" name="message" id="send-message" style=" width: 70%;  margin-top: 30px; padding: 4px 6px; border-radius: 10px;outline: none;" value="hellovdsv" placeholder="Write your message here....." required>
+                <input type='submit' value='submit' />
+                </form>   -->
+               <!-- <form name='confirm_appointment' method='post' class='send_container'>
+                  <input type='text' name="hello" value='hello' />
+                  <input type='text' name="hi" value='hi' />
+                  <input type='submit' class='update_appointment_button' value='submit' />
+              </form> -->
+              
+              <!-- <form name='confirm_appointment_2' method='post' class='confirm_appointment'>
+                  <input type='text' name="hello" value='hello_2' />
+                  <input type='text' name="hi" value='hi_2' />
+                  <input type='submit' class='update_appointment_button' value='submit' />
+              </form>  -->
+              
+          
+          <% for(var abc=0; abc<request.Friends.length;abc++) { %>
+            <button type="button" class="btn " style="padding: 9px 13px; width: 18rem; font-size: 16px; background: white;color: black;outline: none;border: none;border-radius: 17px; margin: 0.5rem;" data-bs-toggle="modal" data-bs-target="#friend-<%= abc %>">
+              <%= request.Friends[abc].firstname %> <%= request.Friends[abc].lastname %>
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="friend-<%= abc %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog" >
+                <div class="modal-content" style="background-color: #f8f9fa;">
+                  <div class="modal-header" style="background-color: #2851a3 ;color: white;">
+                    <h5 class="modal-title" id="exampleModalLabel"><%= request.Friends[abc].firstname %> <%= request.Friends[abc].lastname %></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                  <div class="container_<%= request.Friends[abc].email.split('@')[0] %>">
                 </div>
-                <div class="modal-body">
-                <div class="container-<%= request.Friends[abc].email %>">
-                  <div class="message right">Piyush: How are you?</div>
-                  <div class="message left">Rakshit: Bhai I am fine!!fagehet frhaern rehet thbtrbtrh rtny gtbrt trjhn rttb trrht</div>
-              </div>
-                <div style="display: block;">
-                  <form action="#" id="send-container">
-                    <input type="hidden" id="to" value="<% request.Friends[abc].email %>">
-                <input type="text" id="send-message" style=" width: 70%;  margin-top: 30px; padding: 4px 6px; border-radius: 10px;outline: none;" placeholder="Write your message here....." required>
-                </form>  
-              </div>
+                  <div style="display: block;">
+                    <form name='confirm_appointment' method='post' class='send_container'>
+                      <input type='hidden' name="email" value='<%= request.Friends[abc].email %>' />
+                      <input type='hidden' name="sender_email" value='<%= locals.user.email %>' />
+                      <input type='text' id="send-message" name="message" style=" width: 70%;  margin-top: 30px; padding: 4px 6px; border-radius: 10px;outline: none;" placeholder="Write your comment here...." autocomplete="off"/>
+                      <input type='hidden' name="sender_name" value='<%= locals.user.firstname %> <%= locals.user.lastname %>' />
+                      <input class="btn btn-primary" type='submit' value='submit' />
+                  </form>  
                 </div>
-    
+                  </div>
+      
+                </div>
               </div>
             </div>
-          </div>
-          <% } %>
+            <% } %>
 
         </div>
 
@@ -103,12 +121,12 @@ clear: both;
     </div>
   </div>
 
-
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
+  crossorigin="anonymous "></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/script_socket.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js "
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN "
-    crossorigin="anonymous "></script>
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js "
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
     crossorigin="anonymous "></script>

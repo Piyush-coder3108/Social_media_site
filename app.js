@@ -68,16 +68,21 @@ app.use(customware.setFlash);
 var connectedUser=[];
 
 io.on('connection',(socket)=>{
-    console.log(`New user connected successfully with id ${socket.id}`)
+    // console.log(`New user connected successfully with id ${socket.id}`)
 
     socket.on('user-joined',(username)=>{
-        console.log("hello");
+        // console.log("hello");
         connectedUser[username]=socket.id;
-        console.log(connectedUser[username]);
+    });
+        // console.log(connectedUser[username]);
+
+        socket.on('send',data=>{
+            socket.to(connectedUser[data.username]).emit('receive',{message: data.message, user: data.sendername , name: data.send});
+        })
     });
 
     
-})
+
 
 
 

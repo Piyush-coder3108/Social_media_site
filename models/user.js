@@ -64,20 +64,11 @@ const userSchema= new mongoose.Schema({
              type: mongoose.Schema.Types.ObjectId,
              ref: 'User'
          }
-     ],
-
-     Status: {
-         type: String,
-         enum: ['online','offline']
-     },
-
-     Socketid: {
-         type: String
-     }
+     ]
     
 
 },{
-    timestamp: true
+    timestamps: true
 });
 
 const User= mongoose.model('User',userSchema);
