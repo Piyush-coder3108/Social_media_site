@@ -21,7 +21,7 @@ module.exports.profile=(req,res)=>{
         .exec((error,user)=>{
 
             if(err) { console.log(err) }
-            res.locals.page='home';
+            console.log(result);
             return res.render('user_homepage',{
                 title: `Advencho | ${req.user.firstname} ${req.user.lastname}`,
                 posts: result,
@@ -52,8 +52,16 @@ module.exports.Signup=(req,res)=>{
                 Birthday: dob,
                 Gender: gender
             });
-
-            newUser.save();
+            bcrypt.genSalt(10,(err,salt)=>{
+                bcrypt.hash(password,salt,(error,hash)=>{
+                    if(error){ console.log(error)}
+                    else{
+                        newUser.password=hash;
+                        newUser.save();
+                    }
+                })
+            })
+            
             req.flash('success','You are now registered , Please login !!!!');
             res.redirect('/');
         }
@@ -160,7 +168,7 @@ module.exports.update_profile=(req,res)=>{
          result.Lives=live;
          result.Status=status;
          result.save();
-         res.redirect('back');
+         res.redirect('/user/profile');
 
     })
 }

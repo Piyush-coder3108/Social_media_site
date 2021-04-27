@@ -13,7 +13,7 @@
            
             <span><%= posts[i].likes.length %></span>
             <% var liked=false; %>
-            <% for(var num=0;num<posts[i].likes.length;num++){  if(posts[i].likes[num]==locals.user.id){liked=true; }} %>
+            <% for(var num=0;num<posts[i].likes.length;num++){  if(posts[i].likes[num]==locals.user.id){  liked=true; }} %>
               <% if(!liked) { %>
               <button type="submit" style="border: none; outline: none; background: transparent;"><img src="/images/svg/thums-up.svg " type="submit" class="btn like " alt=" "></button>
               <% } else {%>

@@ -1,5 +1,5 @@
 const passport = require('passport');
-
+const bcrypt= require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/user');
@@ -18,13 +18,18 @@ passport.use(new LocalStrategy({
                 return done(err);
             }
 
-            if (!user || user.password != password){
+            if (!user){ 
                 console.log('User not found');
                 
                 return done(null, false);
             }
-
-            return done(null, user);
+            bcrypt.compare(password,user.password,(err,ismatch)=>{
+                if(err) { console.log(err)}
+                if(ismatch) { return done(null,user)}
+                else{
+                    return done(null,false);
+                }
+            })
         });
     }
 
