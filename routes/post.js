@@ -2,8 +2,7 @@ const express= require('express');
 const passport = require('passport');
 const Router= express.Router();
 const Post_controller= require('../controllers/post_controller');
-const Post=require('../models/post')
-const path=require('path');
+
 
 
 

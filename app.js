@@ -1,5 +1,6 @@
 const express= require('express');
 const expressLayouts= require('express-ejs-layouts');
+require('dotenv').config();
 const cookieParser= require('cookie-parser');
 const db=require('./config/mongoose');
 const session= require('express-session');

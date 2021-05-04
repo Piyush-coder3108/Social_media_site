@@ -13,19 +13,24 @@ module.exports.profile=(req,res)=>{
          }
      })
      .exec((err,result)=>{
-         if(err) { console.log(err); return;}
+         if(err) { console.log(err); 
+         req.flash('error','Server Error, Please Try again after sometime!!!!');
+         res.redirect('/');
+}
          
         User.findById(req.user.id)
         .populate('Pending_request')
         .populate('Friends')
         .exec((error,user)=>{
 
-            if(err) { console.log(err) }
-            console.log(result);
+            if(err) { console.log(err);
+                req.flash('error','Server Error, Please Try again after sometime!!!!');
+                res.redirect('/');
+     }
             return res.render('user_homepage',{
                 title: `Advencho | ${req.user.firstname} ${req.user.lastname}`,
                 posts: result,
-                request: user,
+                request: user
         })
 
         })
@@ -54,7 +59,11 @@ module.exports.Signup=(req,res)=>{
             });
             bcrypt.genSalt(10,(err,salt)=>{
                 bcrypt.hash(password,salt,(error,hash)=>{
-                    if(error){ console.log(error)}
+                    if(error){ console.log(error);
+                        req.flash('error','Server Error, Please Try again after sometime!!!!');
+                        res.redirect('/');
+            
+                    }
                     else{
                         newUser.password=hash;
                         newUser.save();
@@ -69,7 +78,7 @@ module.exports.Signup=(req,res)=>{
         
     })
     .catch(err=>{
-        req.flash('error','Server Error !!!!');
+        req.flash('error','Server Error Please try again after sometime !!!!');
         res.redirect('/');
     });
 
@@ -100,7 +109,11 @@ module.exports.Signout=(req,res)=>{
 module.exports.find_profile=(req,res)=>{
     var ispresent=false;
     User.find({email: req.body.username},(err,user)=>{
-        if(err) { console.log(err)}
+        if(err) { console.log(err);
+            req.flash('error','Server Error, Please Try again after sometime!!!!');
+            res.redirect('/');
+
+        }
         if(!user){
             req.flash('error','User not found');
             res.redirect('back');
@@ -123,7 +136,11 @@ module.exports.find_profile=(req,res)=>{
          User.findById(req.user.id)
          .populate('Pending_request')
          .exec((error,response)=>{
-          if(error || err ){ console.log(error || err)}
+          if(error || err ){ console.log(error || err);
+            req.flash('error','Server Error, Please Try again after sometime!!!!');
+            res.redirect('/');
+
+        }
           var friend=false;
           
           for(var xyz=0;xyz<response.Friends.length;xyz++){
@@ -156,7 +173,11 @@ module.exports.find_profile=(req,res)=>{
 // For updating profile
 module.exports.update_profile=(req,res)=>{
     User.findById(req.user.id,(err,result)=>{
-        if(err) { console.log(err)}
+        if(err) { console.log(err);
+            req.flash('error','Server Error, Please Try again after sometime!!!!');
+            res.redirect('/');
+
+        }
          const { firstname, lastname, dob, gender, bio, work, study, live, status}= req.body;
          result.firstname=firstname;
          result.lastname=lastname;
@@ -177,9 +198,12 @@ module.exports.update_profile=(req,res)=>{
 
 // For managing request
 module.exports.manage_request=(req,res)=>{
-    console.log(req.body);
     User.findById(req.body.to,(err,result)=>{
-        if(err) { console.log(err)}
+        if(err) { console.log(err);
+            req.flash('error','Server Error, Please Try again after sometime!!!!');
+            res.redirect('/');
+
+        }
         result.Pending_request.push(req.body.from);
         result.save();
     })
@@ -193,13 +217,21 @@ module.exports.manage_request=(req,res)=>{
 // for accepting a request
 module.exports.accept_request=(req,res)=>{
     User.findById(req.user.id,(err,result)=>{
-        if(err) { console.log(err)}
+        if(err) { console.log(err);
+            req.flash('error','Server Error, Please Try again after sometime!!!!');
+            res.redirect('/');
+
+        }
         result.Friends.push(req.params.id);
         User.findByIdAndUpdate(req.user.id,{$pull : { Pending_request: req.params.id}},(err,done)=>{       
         });
         result.save();
         User.findById(req.params.id,(err,user)=>{
-            if(err) { console.log(err)}
+            if(err) { console.log(err);
+                req.flash('error','Server Error, Please Try again after sometime!!!!');
+                res.redirect('/');
+    
+            }
             user.Friends.push(req.user.id);
             user.save();
             res.redirect('back');
@@ -218,18 +250,46 @@ module.exports.decline_request=(req,res)=>{
 // For changing password
 
 module.exports.forgot_password=(req,res)=>{
-    User.findOneAndUpdate({email: req.body.email},{$set:{'password': req.body.password}},(err,result)=>{
-        if(err) { console.log(err)}
-        if(!result){
-            req.flash('error','No User found !!!!!');
+    User.find({email: req.body.email},(err,user)=>{
+        if(err){ console.log(err);
+            req.flash('error','Server Error, Please Try again after sometime!!!!');
+            res.redirect('/');
+
+        }
+        if(!user){ 
+            req.flash('error','User not Found!!!!'); 
             res.redirect('/');
         }
         else{
-            // result.save();
-            req.flash('success','Password changed successfully!!!!');
-            res.redirect('/')
-        }
+            bcrypt.genSalt(10,(err,salt)=>{
+                bcrypt.hash(req.body.password,salt,(error,hash)=>{
+                    if(error){ console.log(error);
+                        req.flash('error','Server Error, Please Try again after sometime!!!!');
+                        res.redirect('/');
+            }
+                    else{
+                        User.findOneAndUpdate({email: req.body.email},{$set:{'password': hash}},(err,result)=>{
+                            if(err) { console.log(err);
+                                req.flash('error','Server Error, Please Try again after sometime!!!!');
+                                res.redirect('/');
+                    }
+                            if(!result){
+                                req.flash('error','No User found !!!!!');
+                                res.redirect('/');
+                            }
+                            else{
+                                // result.save();
+                                req.flash('success','Password changed successfully!!!!');
+                                res.redirect('/')
+                            }
+                        })
+                    }
+                })
+            })
+         }
     })
+    
+    
     
 }
 
