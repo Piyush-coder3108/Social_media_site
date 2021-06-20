@@ -22,7 +22,10 @@
     <%- script %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-        <% if(flash.error && flash.error.length>0) { %>
+       
+        var flasherror='<%= flash.error %>';
+
+         if(flasherror && flasherror.length>0) { 
          new Noty({
              theme: 'relax',
              text: "<%= flash.error %>",
@@ -30,8 +33,10 @@
              layout: 'topRight',
              timeout: 1500
             }).show();
-       <%  } %>
-       <% if(flash.success && flash.success.length>0) { %>
+         } 
+
+         var flashsuccess='<%= flash.success %>';
+        if(flashsuccess && flashsuccess.length>0) { 
          new Noty({
              theme: 'relax',
              text: "<%= flash.success %>",
@@ -39,7 +44,7 @@
              layout: 'topRight',
              timeout: 1500
             }).show();
-       <%  } %>
+        } 
        
        
     

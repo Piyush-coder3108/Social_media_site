@@ -47,6 +47,10 @@ float: right;
 clear: both;
 
 }
+.online{
+  color: lightgreen;
+  font-weight: 900;
+}
 
 </style>
 
@@ -110,7 +114,10 @@ clear: both;
           
           <% for(var abc=0; abc<request.Friends.length;abc++) { %>
             <button type="button" class="btn " style="padding: 9px 13px; width: 18rem; font-size: 16px; background: white;color: black;outline: none;border: none;border-radius: 17px; margin: 0.5rem;" data-bs-toggle="modal" data-bs-target="#friend-<%= abc %>">
-              <%= request.Friends[abc].firstname %> <%= request.Friends[abc].lastname %>
+              <%= request.Friends[abc].firstname %> <%= request.Friends[abc].lastname %>  
+              <% if(request.Friends[abc].online==true) { %>
+                <span class="online">o</span>
+              <% } %>
             </button>
             <!-- Modal -->
             <div class="modal fade" id="friend-<%= abc %>" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -193,7 +200,8 @@ clear: both;
   </script>
   <script>
     $(document).ready(function () {
-      var num = <%= locals.user.Pending_request.length %>
+      var num = '<%= locals.user.Pending_request.length %>'
+      num= Number(num);
       if (num > 0) {
         new Noty({
           theme: 'relax',
@@ -204,15 +212,15 @@ clear: both;
         }).show();
       }
         
-
-          <% for (var k = 0; k < posts.length; k++) { %>
-            $(`#comment-show-<%= k %>`).hide();
-        $(`#comment-<%= k %>`).click(function () {
-          console.log("hello <%= k %>");
-          $(`#comment-show-<%= k %>`).toggle();
+        var plength='<%=posts.length %>';
+        plength=Number(plength);
+           for (let k = 0; k < plength ; k++) { 
+            $(`#comment-show-${k}`).hide();
+        $(`#comment-${k}`).click(function () {
+          $(`#comment-show-${k}`).toggle();
         });
 
-          <% } %>
+           } 
 
           
 

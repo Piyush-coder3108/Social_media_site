@@ -11,6 +11,7 @@ const MongoStore=require('connect-mongo');
 const customware=require('./config/middleware')
 const http=require('http');
 const socketIO=require('socket.io');
+const User= require('./models/user');
 const app=express();
 
 const server= http.createServer(app);
@@ -67,6 +68,7 @@ app.use(customware.setFlash);
 //express Router
 
 var connectedUser=[];
+var connectedUserId=[];
 
 io.on('connection',(socket)=>{
     // console.log(`New user connected successfully with id ${socket.id}`)
@@ -74,11 +76,26 @@ io.on('connection',(socket)=>{
     socket.on('user-joined',(username)=>{
         // console.log("hello");
         connectedUser[username]=socket.id;
+        connectedUserId[socket.id]=username;
+        User.findOneAndUpdate({email:username},{ $set: { online: true} },{ new: true },(err,result)=>{
+            
+            if(err){ console.log(err)}
+
+        } );
+        
     });
         // console.log(connectedUser[username]);
 
         socket.on('send',data=>{
             socket.to(connectedUser[data.username]).emit('receive',{message: data.message, user: data.sendername , name: data.send});
+        });
+
+        socket.on('disconnect',()=>{
+            var username=connectedUserId[socket.id];
+            User.findOneAndUpdate({email:username},{$set:{online:false}},{new: true},(err,result)=>{
+                if(err){ console.log(err)}
+
+            });
         })
     });
 

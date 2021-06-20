@@ -30,4 +30,8 @@ router.get('/autocomplete',(req,res)=>{
 // For post related work
 router.use('/post',require('./post'))
 
+
+// For api
+ router.use('/api',require('./api'));
+
 module.exports=router;
